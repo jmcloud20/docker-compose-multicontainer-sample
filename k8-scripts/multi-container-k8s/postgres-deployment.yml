@@ -15,17 +15,13 @@ spec:
       volumes:
         - name: postgres-storage
           persistentVolumeClaim:
-              claimName: database-persistent-volume-claim
+              claimName: database-pvc
       containers:
       - name: postgres
         image: postgres
-        env:
-          - name: PGPASSWORD
-            valueFrom:
-                secretKeyRef:
-                  key: PGPASSWORD
-                  # secret name
-                  name: pgpassword
+        envFrom:
+          - configMapRef:
+              name: application-config-map
         volumeMounts:
           - mountPath: 
             # Same as volumes-name

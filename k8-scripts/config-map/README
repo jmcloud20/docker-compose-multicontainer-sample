@@ -1,0 +1,2 @@
+# Print environment variables.
+kubectl exec -it [pod name] -- printenv

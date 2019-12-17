@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: application-deployment
+spec:
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      # This is the declaration of volume with reference to ConfigMap
+      volumes:
+        - name: config-volume
+          configMap:
+              name: application-config
+      containers:
+      - name: ubuntu-container
+        image: ubuntu
+        command: [ "/bin/bash", "-ce", "tail -f /dev/null" ]
+        # This is where the file from configmap would be stored  inside the container.
+        volumeMounts:
+          - mountPath: /etc/config
+            name: config-volume
+        # Use this option if you will use --from-file because value from file are 
+        # converted as data not keys in configmap
+        envFrom:
+          - configMapRef:
+              name: application-config
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"

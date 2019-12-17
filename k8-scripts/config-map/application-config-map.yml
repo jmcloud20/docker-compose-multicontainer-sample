@@ -1,0 +1,18 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: application-config
+data:
+  # Using key value pair.
+  database.mysql.uname: user1
+  database.mysql.pword: user1234
+  database.redis.uname: redis1
+  database.redis.pword: redis2
+  REDIS_PORT: '6379'
+  
+  #or using keys like in property file.
+  #keys:
+    #database.mysql.uname=user1
+    #database.mysql.pword=user1234
+    #database.redis.uname=redis1
+    #detabase.redis.pword=redis2
