@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # Same as deployment file.
+  name: client-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      # Selector where other k8 object should refer to access this.
+      component: web
+  template:
+    metadata:
+      labels:
+        # Same as match label
+        component: web
+    spec:
+      containers:
+        # Any name for the container.
+      - name: client
+        image: stephengrider/multi-client
+        # For Limiting resources, however would limit the provisioned replica if would exceed resources.
+        #resources:
+          #limits:
+            #memory: "128Mi"
+            #cpu: "500m"
+        ports:
+        - containerPort: 3000

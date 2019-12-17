@@ -1,3 +1,6 @@
 # New image deployment versioning
 # kubectl set image [object type]/[object name] [container name] = [image to use]
 # kubectl set image Deployment/client-deployment client=stephengrider/multi-client:v1
+
+kubectl create secret [type of secret] [secret name] --from-literal key=value
+kubectl create secret generic [secret name] --from-literal key=value
