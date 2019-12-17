@@ -8,3 +8,6 @@ kubectl create secret generic [secret name] --from-literal key=value
 # kubectl describe [object type]
 
 # kubectl exec [pod name] -- [cmd line]
+
+# Secret in the yml should be encoded base 64
+echo "password12345" | base64

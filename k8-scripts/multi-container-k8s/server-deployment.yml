@@ -15,11 +15,22 @@ spec:
       containers:
       - name: server
         image: stephengrider/multi-server
+        #resources:
+          #limits:
+            #memory: "128Mi"
+            #cpu: "500m"
         ports:
         - containerPort: 5000
         envFrom:
           - configMapRef:
               name: application-config-map
           - secretRef:
-              name: pgpassword
+              name: application-secret
+        # Same with env From secret value is still displayed
+        #env:
+        #  - name: PGPASSWORD
+        #    valueFrom:
+        #        secretKeyRef:
+        #          name: application-secret
+        #          key: PGPASSWORD
 
