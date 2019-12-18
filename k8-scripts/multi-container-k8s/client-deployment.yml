@@ -18,7 +18,7 @@ spec:
       containers:
         # Any name for the container.
       - name: client
-        image: stephengrider/multi-client
+        image: jmgarcia214/multi-client
         # For Limiting resources, however would limit the provisioned replica if would exceed resources.
         #resources:
           #limits:

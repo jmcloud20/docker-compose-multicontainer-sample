@@ -34,9 +34,9 @@ spec:
             # Anything stored in the mountPath will have a copy
             # in a folder named postgres inside the pvc.
             subPath: postgres
-        resources:
-          limits:
-            memory: "128Mi"
-            cpu: "500m"
+        #resources:
+          #limits:
+            #memory: "128Mi"
+            #cpu: "500m"
         ports:
         - containerPort: 5432

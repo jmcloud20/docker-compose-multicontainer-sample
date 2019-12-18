@@ -1,0 +1,20 @@
+# Download the latest dashboard yaml file.
+curl -O https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+
+# Add the following lines in the yaml file (line 116)
+args:
+    - --auto-generate-certificates
+    - --enable-skip-login
+    - --disable-settings-authorizer
+
+# Apply yaml file
+kubectl apply -f kubernetes-dashboard.yaml
+
+# Start the server
+kubectl proxy
+
+# Access dashboard
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+
+# Utils
+kubectl get pods --all-namespaces

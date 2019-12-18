@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-svc
+  annotations:
+    # Type of ingress we would be using.
+    kubernetes.io/ingress.class: nginx
+    # This config would re-write the url to exclude strings that would couple it to downstream server.
+    # e.g. localhost:8080/api/hello -> localhost:8080/hello
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /?(.*)
+            backend:
+              serviceName: client-cluster-ip-svc
+              servicePort: 3000
+          - path: /api/?(.*)
+            backend:
+                serviceName: server-cluster-ip-svc
+                servicePort: 5000
