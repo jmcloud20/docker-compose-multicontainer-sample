@@ -1,0 +1,135 @@
+docker ps 
+docker ps --all
+docker run [image] [command] - both create and start
+docker create [image / tag] [command]
+docker start [container id]
+docker start -a [container id] - print logs
+docker system prune - clean up unused images.
+docker logs [container id]
+docker stop [container id] - proper shutdown, if not done 10 sec will forward to kill
+docker kill [container id] - sudden shutdown
+docker exec -it [container id] [command] 
+docker exec -it [container id] sh - enter the shell of the container.
+[Ctrl + C / D] exit
+docker run -it [image] sh
+
+
+Creating images:
+Dockerfile - Docker client - Docker Server - Usable Image
+
+Create images
+- Specify base image
+FROM [Base image]
+
+- Run commands to install additional programs
+RUN []
+
+- Specify a command to run on container start.
+CMD []
+
+create Dockerfile
+docker build .	
+
+# tagging an image.
+docker build -t [docker id]/[name of tag]:[version] [directory]
+docker run [docker id]/[name of tag]
+docker commit -c 'CMD ["redis-server"]' [container id]
+
+COPY [local path] [container path] - copy local files to container directory
+
+# PORT MAPPING
+docker run -p [local port] : [container port] [docker id]/[tag]
+
+WORKDIR [container directory]
+
+docker run -d [image] * run in background
+
+# DOCKER COMPOSE
+docker-compose up -d
+docker-compose down
+docker-compose up
+docker-compose up --build
+
+# restart policies:
+"no"
+always
+on-failure
+unless-stopped
+
+# Custom named docker file.
+docker build -f Dockerfile.dev .
+
+#kubernetes
+kubectl -f apply [filename]
+kubectl get pods 
+kubectl get services
+
+minikube ip - show ip of the vm cluster
+
+# 2 types of deployment (imperative vs declarative)
+kubectl describe [type] [name]
+# kubectl updates file based on Name, Kind, Image otherwise it will create new object.
+
+Pods
+- Runs a single set of containers
+- Good for one-off dev purposes
+- Rarely used directly in production
+
+Deployment
+- Runs a set of identical pods.
+- Monitors the state of each pod, updating as necessary
+- Good for dev
+- Good for production
+
+kubectl get pods -o wide
+kubectl describe storageclass
+kubectl get storageclass
+
+kubectl create secret generic [secret name] --from-literal key=value [e.g. PGPASSWORD=password123]
+kubectl get secrets
+
+kubectl create configmap game-config-2 --from-file=configure-pod-container/configmap/game.properties
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dapi-test-pod
+spec:
+  containers:
+    - name: test-container
+      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh","-c","cat /etc/config/keys" ]
+      volumeMounts:
+      - name: config-volume
+        mountPath: /etc/config
+  volumes:
+    - name: config-volume
+      configMap:
+        name: special-config
+        items:
+        - key: SPECIAL_LEVEL
+          path: keys
+  restartPolicy: Never
+
+  kubectl create -f https://kubernetes.io/examples/pods/pod-configmap-volume-specific-key.yaml
+  kubectl exec -it busybox-app-97fc744bf-7m2jk -- printenv
+
+  kubectl exec -it shell-demo -- /bin/bash
+
+CrashLoopBackOff exception
+As per Describe Pod command listing, your Container inside the Pod has been already completed with exit code 0, which states about successful completion without any errors/problems, but the life cycle for the Pod was very short. To keep Pod running continuously you must specify a task that will never finish.
+  command: [ "/bin/bash", "-ce", "tail -f /dev/null" ]
+
+Replace configmap object with file
+kubectl create configmap application-config --from-file=conf -o yaml --dry-run | kubectl replace -f -  
+
+
+
+stop all containers:
+docker kill $(docker ps -q)
+
+remove all containers
+docker rm $(docker ps -a -q)
+
+remove all docker images
+docker rmi $(docker images -q)
