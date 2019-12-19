@@ -10,12 +10,17 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - http:
+      # Add this to /etc/hosts
+    - host: sample-ingress.com
+      http:
         paths:
+            # Path formats the URL before routing to downstream services.
+            # sample-ingress.com
           - path: /?(.*)
             backend:
               serviceName: client-cluster-ip-svc
               servicePort: 3000
+            # sample-ingress.com/api
           - path: /api/?(.*)
             backend:
                 serviceName: server-cluster-ip-svc
