@@ -4,6 +4,8 @@ metadata:
   name: application-config-map
 data:
   REDIS_PORT: '6379'
+  REDIS_HOST: redis-cluster-ip-svc
   PGUSER: postgres
   PGDATABASE: postgres
   PGPORT: '5432'
+  PGHOST: postgres-cluster-ip

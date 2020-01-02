@@ -19,10 +19,13 @@ spec:
           #limits:
             #memory: "128Mi"
             #cpu: "500m"
-        env:
-          - name: REDIS_HOST
+        envFrom:
+          - configMapRef:
+              name: application-config-map
+        #env:
+          #- name: REDIS_HOST
             # Name of the ClusterIP defined for REDIS.
-            value: redis-cluster-ip-svc
-          - name: REDIS_PORT
+            #value: redis-cluster-ip-svc
+          #- name: REDIS_PORT
             # Env variables accepts string as value.
-            value: '6379'
+            #value: '6379'
