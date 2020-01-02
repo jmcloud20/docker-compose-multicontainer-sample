@@ -1,0 +1,13 @@
+kubectl describe ing [ingress name]
+
+1. Make sure you executed the mandatory generic script that was discussed in the lecture:
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml
+ 
+2. Execute the provider specific script to enable the service:
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud-generic.yaml
+
+3. Verify the service was enabled by running the following:
+
+kubectl get svc -n ingress-nginx

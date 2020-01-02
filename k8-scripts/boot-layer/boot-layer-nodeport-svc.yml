@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: boot-layer-nodeport-svc
+spec:
+  type: NodePort
+  selector:
+    component: boot-layer
+  ports:
+  - port: 8080
+    targetPort: 8080
+    # You can only use ports 30000–32767
+    nodePort: 30000
